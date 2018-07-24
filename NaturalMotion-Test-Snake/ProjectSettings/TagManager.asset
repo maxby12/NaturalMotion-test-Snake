@@ -8,6 +8,8 @@ TagManager:
   - Worm
   - Worm Head
   - Worm Tail
+  - Apple
+  - Apple Trunk
   layers:
   - Default
   - TransparentFX
