@@ -6,8 +6,8 @@ TagManager:
   tags:
   - Wall
   - Worm
-  - Worm Tail
   - Worm Head
+  - Worm Tail
   layers:
   - Default
   - TransparentFX

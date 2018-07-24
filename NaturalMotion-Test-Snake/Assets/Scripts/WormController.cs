@@ -7,6 +7,9 @@ public class WormController : MonoBehaviour {
 	// ATTRIBUTES
 	public List<Transform> bodyParts = new List<Transform>();
 	public float speed;
+	public float minSpeed;
+	public float maxSpeed;
+	public float accelerationTime = 60;
 	public float rotationSpeed = 50;
 	public float minDistance = 0.25f;
 	public int initialSize = 4;
@@ -14,6 +17,7 @@ public class WormController : MonoBehaviour {
 	public GameObject bodyPrefab;
 
 	private float distance;
+	private float time;
 	private Transform currentBodyPart;
 	private Transform previousBodyPart;
 
@@ -23,17 +27,24 @@ public class WormController : MonoBehaviour {
 		for (int i = 0; i < initialSize; i++) {
 			addBodyPart();
 		}
+
+		time = 0;
 	}
 
 	void Update ()
 	{
 		Movement();
 
+		speed = Mathf.SmoothStep(minSpeed, maxSpeed, time / accelerationTime);
+		time += Time.deltaTime;
+
+
 		if (Input.GetKey(KeyCode.Q)) addBodyPart();
 	}
 
 	void OnCollisionEnter (Collision col)
 	{
+		
 		if(col.gameObject.tag == "Wall") {
 			Destroy(gameObject);
 		}
@@ -43,7 +54,7 @@ public class WormController : MonoBehaviour {
 		float currentSpeed = speed;
 
 		if (Input.GetKey (KeyCode.W))
-			currentSpeed *= 2;
+			currentSpeed *= 1.5f;
 
 		bodyParts[0].Translate(bodyParts [0].forward * currentSpeed * Time.smoothDeltaTime, Space.World);
 
